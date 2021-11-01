@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.css';
+import { useState } from 'react';
 import './App.css';
+import Form from './components/Form';
+import Results from './components/Results';
 
 function App() {
+  const [myChar, setMyChar] = useState([]);
+
+  const addMyChar = (character) => {
+    //Do a thing
+    setMyChar([...myChar, character]);
+  }
+
+  const changeAliveStatus = idx => {
+    const charToUpdate = myChar[idx];
+    charToUpdate.isAlive = !charToUpdate.isAlive;
+    setMyChar([...myChar]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container row">
+      <Form onSubmitChar={addMyChar}></Form>
+      <Results allChars={myChar} updateIsAlive={changeAliveStatus}/>
     </div>
   );
 }
